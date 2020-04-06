@@ -42,7 +42,7 @@ function initSearch() {
             html = data.map(function (post) {
                 return tpl(searchTpl, {
                     title: post.title,
-                    url: (window.mihoConfig.root + '/' + post.path)
+                    url: ('/' + post.path)
                 });
             }).join('');
         } else {

@@ -11,7 +11,8 @@
         sideMenuBox = $("#sidebar-menu-box"),
         mobileHeaderMenu = $("#mobile-header-menu-nav"),
         _mobileHeaderMenuLocked = false,
-        sideMenuBoxIsOpen = true,
+        sideMenuBoxIsOpen = false,
+        lastAnchor = 0,
         clientHeight = d.documentElement.clientHeight; //获取可视区的高度
     var Blog = {
         showHeaderMenu: function (scrollTop) {
@@ -65,6 +66,30 @@
                 toc.removeClass("post-toc-not-top");
                 toc.addClass("post-toc-top");
             }
+            var anchorList = $(".markdownIt-Anchor");
+            var tocsList = $(".post-toc-link");
+            var currentAnchor = lastAnchor;
+            var offset = 0;
+            var tocsHeight = tocsList[tocsList.length - 1].getBoundingClientRect().y
+                             - tocsList[0].getBoundingClientRect().y;
+            for (i = 1; i < anchorList.length; i++) {
+                if(anchorList[i].getBoundingClientRect().y > clientHeight) {
+                    currentAnchor = i - 1;
+                    break;
+                }
+                if(i == anchorList.length - 1) {
+                    currentAnchor = i;
+                    offset += tocsList[i].offsetHeight;
+                    break;
+                }
+                offset += tocsList[i].offsetHeight;
+            }
+            if(currentAnchor == lastAnchor) return;
+            $(tocsList[lastAnchor]).removeClass("active");
+            offset = offset < tocsHeight - clientHeight * 0.236 ? offset : tocsHeight - clientHeight * 0.236;
+            toc[0].style.top = (clientHeight * 0.382 - offset) + "px";
+            lastAnchor = currentAnchor;
+            $(tocsList[currentAnchor]).addClass("active");
         },
         showMobileHeaderMenu: function (status) {
             if (_mobileHeaderMenuLocked) {
@@ -134,20 +159,44 @@
                 });
             }
         },
+        showSearch: function (status) {
+            if (status) {
+                searchWrap.css('top','50%');
+                searchWrap.css('marginTop','-80px');
+                searchWrap.css('opacity','1');
+            } else {
+                searchWrap.css('top','0');
+                searchWrap.css('opacity','0');
+                $('#keywords').val("");
+                $('#search-container').removeClass('search-container-show');
+            }
+        },
     };
 
     //初始化搜索数据
     initSearch();
     //搜索点击事件
     search.click(function () {
-        searchWrap.css('top','50%');
-        searchWrap.css('marginTop','-80px');
-        searchWrap.css('opacity','1');
+        // searchWrap.css('top','50%');
+        // searchWrap.css('marginTop','-80px');
+        // searchWrap.css('opacity','1');
+        Blog.showSearch(true);
+        return false;
     });
+
     $('.search-close').click(function(){
-        searchWrap.css('top','0');
-        searchWrap.css('opacity','0');
-        $('#search-container').removeClass('search-container-show');
+        // searchWrap.css('top','0');
+        // searchWrap.css('opacity','0');
+        // $('#search-container').removeClass('search-container-show');
+        Blog.showSearch(false);
+    });
+
+    searchWrap.click(function (e) {
+        if (e.target.className == "search-item-li-title") {
+            return true;
+        }
+
+        return false;
     });
 
     //tags | 标签
@@ -157,41 +206,41 @@
     Blog.setCategories();
     //类别展示
     $("#sidebar-category").click(function (e) {
+        if (sideMenuBoxIsOpen && categories.attr("style") == "display: block;") {
+            Blog.showSidebarBox(false);
+            sideMenuBoxIsOpen = false;
+        } else {
+            Blog.showSidebarBox(true);
+            sideMenuBoxIsOpen = true;
+        }
         tags.css('display', 'none');
         categories.css('display', 'block');
         e.stopPropagation();
-        if (sideMenuBoxIsOpen) {
-            Blog.showSidebarBox(true);
-            sideMenuBoxIsOpen = false;
-        } else {
-            Blog.showSidebarBox(false);
-            sideMenuBoxIsOpen = true;
-        }
     });
     //标签展示
     $("#sidebar-tag").click(function (e) {
+        if (sideMenuBoxIsOpen && tags.attr("style") == "display: block;") {
+            Blog.showSidebarBox(false);
+            sideMenuBoxIsOpen = false;
+        } else {
+            Blog.showSidebarBox(true);
+            sideMenuBoxIsOpen = true;
+        }
         tags.css('display', 'block');
         categories.css('display', 'none');
         e.stopPropagation();
-        if (sideMenuBoxIsOpen) {
-            Blog.showSidebarBox(true);
-            sideMenuBoxIsOpen = false;
-        } else {
-            Blog.showSidebarBox(false);
-            sideMenuBoxIsOpen = true;
-        }
     });
     //点击菜单区域不能关闭菜单
     sideMenuBox.click(function (e) {
         e.stopPropagation();
-        if (sideMenuBoxIsOpen) {
+        if (!sideMenuBoxIsOpen) {
             return false;
         }
     });
     //点击close按钮关闭菜单
     $(".sidebar-menu-box-close").click(function() {
         Blog.showSidebarBox(false);
-        sideMenuBoxIsOpen = true;
+        sideMenuBoxIsOpen = false;
     });
 
     //回到顶部点击事件
@@ -222,7 +271,7 @@
             _mobileHeaderMenuLocked = false;
         }, 350);
     });
-    
+
     //Share
     if (w.mihoConfig.share) {
         Blog.share();
@@ -235,7 +284,8 @@
     //body
     body.click(function () {
         Blog.showSidebarBox(false);
-        sideMenuBoxIsOpen = true;
+        sideMenuBoxIsOpen = false;
         Blog.showMobileHeaderMenu(false);
+        Blog.showSearch(false);
     });
 })(window, document);

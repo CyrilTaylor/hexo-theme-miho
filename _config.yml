@@ -1,21 +1,33 @@
 # hexo-theme-miho
 # https://github.com/wongminho/hexo-theme-miho
 
+# -----------------------------------------------------------------------------
+# Do Not Edit This Configuration
+# Config Theme In Node `theme_config` of Hexo Config File `_config.yml`
+# Following https://hexo.io/docs/configuration.html#Overriding-Theme-Config
+# -----------------------------------------------------------------------------
+
 # Favicon of your site | 网站icon
 favicon: /favicon.ico
 
 # Header
 
 # Keywords of your site | 网站关键字
-keywords: MinHow,MinHow's Blog
+keywords: hexo,blog,minhow
 # Head headline | 头部标题
 header_title: MinHow's Blog
 # Head description | 头部描述
-header_description: 一个专注 WEB 开发的技术博客
+header_description: |
+  卸下浮躁，保持宁静。
+  心无旁骛，用心专注。
+  脚踏实地，稳健向前。
+  追求极致，享受其中。
+  相扶相爱，群人共远。
+  更高境地，漫步人生。
 # Link to your logo | logo地址
-logo: images/logo.png
+logo: images/logo.webp
 # Link to your banner_img | 首页banner图地址
-banner_img: images/banner.jpg
+banner_img: images/banner.webp
 # Menu setting | 菜单设置
 #  name:                  Font Awesome icon | Font Awesome 图标
 #    title: Home          Title | 标题
@@ -23,15 +35,15 @@ banner_img: images/banner.jpg
 #    target: true         Whether to jump out | 是否跳出
 menu:
   home:
-    title: Home
+    title: 主页
     url: /
     target: false
   archive:
-    title: Archives
+    title: 归档
     url: /archives
     target: false
   user:
-    title: About
+    title: 关于
     url: /about
     target: false
 # Social setting, use to display social information | 社交设置，用来展示社交信息
@@ -74,7 +86,7 @@ excerpt_link: more>>
 # New window open link | 新窗口打开文章
 open_new_link: false
 # Article default cover picture，size：350*150 | 文章默认封面图，尺寸：350*150
-cover_picture: images/banner.jpg
+cover_picture: images/banner.webp
 # Open background particles | 开启背景粒子
 open_bg_particle: true
 # Open animation in homepage and head | 开启主页及头部动画
@@ -91,6 +103,10 @@ share: true
 style:
   # Main color tone | 主色调
   main_color: '#0cc'
+  math:
+    katex:
+      # cdn: //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css
+      cdn: //cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css
 
 # Reward | 打赏
 
@@ -101,9 +117,9 @@ reward:
   # 标题
   title: 请我吃糖~
   # 微信，关闭设为 false
-  wechat: images/wechat_code.jpg
+  wechat: images/wechat_code.webp
   # 支付宝，关闭设为 false
-  alipay: images/alipay_code.jpg
+  alipay: images/alipay_code.webp
 
 # Comments | 评论
 
@@ -116,6 +132,21 @@ youyan_id: false
 disqus: false
 # gitment  https://github.com/imsun/gitment
 gitment:
+  owner: false   #你的 GitHub ID
+  repo: ''   #存储评论的 repo
+  client_id: '' #client ID
+  client_secret: ''  #client secret
+
+# gitment https://github.com/gitalk/gitalk
+gitalk:
+  owner: false
+  # repo: ''   #存储评论的 repo
+  # client_id: '' #client ID
+  # client_secret: ''  #client secret
+  # distractionFreeMode: true
+
+# vssue https://github.com/meteorlxy/vssue-demo
+vssue:
   owner: false   #你的 GitHub ID
   repo: ''   #存储评论的 repo
   client_id: '' #client ID

@@ -1,5 +1,5 @@
 // https://github.com/chriskempson/tomorrow-theme
-highlight-background = #f6f8fa
+highlight-background = #b6b8ba
 highlight-current-line = #393939
 highlight-selection = #515151
 highlight-foreground = #24292e
@@ -13,7 +13,7 @@ highlight-blue = #6699cc
 highlight-purple = #a95aa9
 
 $code-block
-  background: highlight-background
+  background: rgba(highlight-background, 0.5)
   margin: 8px article-padding * -1
   padding: 15px article-padding
   border-style: solid
@@ -40,17 +40,19 @@ $line-numbers
     border: 1px solid #eee
     border-radius: 2px
     word-wrap: break-word
-    background-color: #f9f2f4
+    background-color: rgba(#b9b2b4, 0.5)
   .code
     font: 14px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace
   pre
     @extend $code-block
+    background: rgba(highlight-background, 0)
     code
       background: none
       text-shadow: none
       padding: 0
   .highlight
     @extend $code-block
+    background: rgba(highlight-background, 0.5)
     pre
       border: none
       margin: 0
@@ -80,11 +82,19 @@ $line-numbers
     .gutter pre
       @extend $line-numbers
       text-align: right
-      padding-right: 20px
+      margin-right: 10px
+      padding-right: 5px
+      border-right: thin solid
     .line
       height: font-size * line-height
     .line.marked
       background: highlight-selection
+    .addition
+      background: #dfd
+      display inline-block
+    .deletion
+      background: #fdd
+      display inline-block
   .gist
     margin: 0 article-padding * -1
     border-style: solid

@@ -1,8 +1,23 @@
 <div class="post-copyright">
     <div class="content">
         <p>最后更新： <%= post.updated.format("YYYY年MM月DD日 HH:mm") %></p>
-        <p>原始链接： <a class="post-url" href="<%- url_for(post.path) %>" title="<%= post.title %>"><%= post.permalink %></a></p>
+        <%_ if (!(post.original && post.original.url)) { %>
+            <p>版权声明：本文为<a href="<%- config.url %>"><%- config.author %></a>原创文章，遵循<a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。</p>
+        <%_ } %>
+        <p><%= ((post.original && post.original.url) ? '原文' : '本文') %>链接： <a class="post-url" href="<%- ((post.original && post.original.url) ? post.original.url : url_for(post.path)) %>" title="<%= ((post.original && post.original.title) ? post.original.title : post.title) %>"><%= ((post.original && post.original.url) ? post.original.url : post.permalink) %></a></p>
         <footer>
+            <%_ if(post.author && (post.author.length > 0)) { %>
+                    <%_ post.author.forEach(function(author) { %>
+                        <%_ if(author.name) { %>
+                        <a href="<%- author.homepage ? author.homepage : '' %>">
+                            <%_ if(author.photo) { %>
+                            <img src="<%- author.photo ? author.photo : '' %>" alt="<%- author.name ? author.name : '' %>">
+                            <%_ } %>
+                            <%- author.name ? author.name : '' %>
+                        </a>
+                        <%_ } %>
+                    <%_ }) %>
+            <%_ } %>
             <a href="<%- config.url %>">
                 <img src="<%- url_for(theme.logo) %>" alt="<%- config.author %>">
                 <%- config.author %>

@@ -7,7 +7,7 @@
               <span class="header-cate">
                 <i class="fa fa-map-marker"></i>
                   <% post.categories.forEach(function (category) { %>
-                  <a href="<%= config.root %>categories/<%= category.name.replace(/\s+/g, '') %>/"><%- category.name %></a>
+                    <a href="<%= config.root %>categories/<%= category.name.replace(/\s+/g, '') %>/"><%- category.name %></a>
                   <% }) %>
               </span>
           <% } %>
@@ -18,7 +18,7 @@
         <div class="article-img">
             <a href="<%- url_for(post.path) %>" <% if (theme.open_new_link) {%> target="_blank" <% } %>>
                 <% if (post.cover_picture) { %>
-                <img src="<%- (/^(http:|https:)?\/\//.test(post.cover_picture) ? post.cover_picture : config.url.replace(/\/$/, '') + '/' + post.cover_picture)%>" alt="<%- post.title %>" title="<%- post.title %>">
+                <img src="<%- (/^(http:|https:)?\/\//.test(post.cover_picture) ? post.cover_picture : url_for(post.path).replace(/\/$/, '') + '/' + post.cover_picture)%>" alt="<%- post.title %>" title="<%- post.title %>">
                 <% } else { %>
                 <img src="<%- (/^(http:|https:)?\/\//.test(theme.cover_picture) ? theme.cover_picture : config.url.replace(/\/$/, '') + '/' + theme.cover_picture) %>" alt="<%- post.title %>" title="<%- post.title %>">
                 <% } %>
@@ -34,7 +34,6 @@
       <% } else { %>
             <%- partial('post/gallery') %>
             <%- post.content %>
-            <%- partial('post/copyright') %>
       <% } %>
         <% if (! index){ %>
             <%- partial('post/reward') %>
@@ -71,6 +70,10 @@
         <%- partial('plugins/comments/youyan') %>
     <% } else if (theme.gitment.owner) { %>
     <%- partial('plugins/comments/gitment') %>
+    <% } else if (theme.gitalk.owner) { %>
+    <%- partial('plugins/comments/gitalk') %>
+    <% } else if (theme.vssue.owner) { %>
+    <%- partial('plugins/comments/vssue') %>
     <% } else if (theme.disqus || config.disqus_shortname) { %>
         <section id="comments">
             <div id="disqus_thread">
