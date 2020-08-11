@@ -192,7 +192,7 @@
     });
 
     searchWrap.click(function (e) {
-        if (e.target.className == "search-item-li-title") {
+        if (e.target.className == "search-item-li") {
             return true;
         }
 

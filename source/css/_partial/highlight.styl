@@ -20,6 +20,8 @@ $code-block
   border-color: color-border
   border-width: 1px 0
   overflow: auto
+  font-family: FiraCodeNerdFont
+  font-variant-ligatures: normal
   color: highlight-foreground
   line-height: font-size * line-height
 
@@ -42,7 +44,7 @@ $line-numbers
     word-wrap: break-word
     background-color: rgba(#b9b2b4, 0.5)
   .code
-    font: 14px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace
+    font: 14px FiraCodeNerdFont, Consolas, FangSong, STFangsong, "Liberation Mono", Menlo, Courier, monospace
   pre
     @extend $code-block
     background: rgba(highlight-background, 0)
