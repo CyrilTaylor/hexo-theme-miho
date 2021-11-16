@@ -44,7 +44,7 @@
             <nav class="header-nav">
                 <div class="social">
                     <% for (var i in theme.social) { %>
-                        <a <% if(theme.social[i].title){ %>title="<%= theme.social[i].title %>"<% } %> <% if(theme.social[i].target){ %>target="_blank"<% } %> <% if(theme.social[i].url){ %>href="<%- url_for(theme.social[i].url) %><% } %>">
+                        <a <% if(theme.social[i].title){ %>title="<%= theme.social[i].title %>"<% } %> <% if(theme.social[i].target){ %>target="_blank"<% } %> <% if(theme.social[i].url){ %>href="<%- theme.social[i].url %><% } %>">
                             <i class="fa fa-<%= i %> fa-2x"></i></a>
                     <% } %>
                 </div>
